@@ -1,6 +1,4 @@
-import {getFirestore} from 'firebase/firestore';
-import app from './firebaseConfig';
+import { getFirestore } from "firebase/firestore";
+import app from "./firebaseConfig.js";
 
-const firestore = getFirestore(app);
-
-export default firestore;
+export const Firestore = getFirestore(app);

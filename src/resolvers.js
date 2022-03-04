@@ -1,15 +1,32 @@
-import firestore from "./firebase/firestore"
-import { getDoc, doc } from "firebase/firestore"
+import { Firestore } from "./Firebase/Firestore.js";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 
 export default {
-    Query: {
-        user: (id) => {
-            const docRef = doc(firestore, 'users', id);
-             return getDoc(docRef)
-             .then(doc => JSON.stringify(doc))
-             .catch(err => JSON.stringify(err));
-        },
-        users: () => User
+  Query: {
+    user: (_, { id }) => {
+      const docRef = doc(Firestore, "users", id);
+
+      return getDoc(docRef)
+        .then((doc) => {
+          return { id, ...doc.data() };
+        })
+        .catch((err) => err);
     },
 
-}
+    users: () => {
+      const docRef = collection(Firestore, "users");
+
+      return getDocs(docRef)
+        .then((docs) => {
+          const users = [];
+
+          docs.forEach((doc) => {
+            users.push({ id: doc.id, ...doc.data() });
+          });
+
+          return users;
+        })
+        .catch((err) => err);
+    },
+  },
+};
