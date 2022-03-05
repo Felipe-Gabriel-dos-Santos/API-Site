@@ -2,15 +2,35 @@ import { gql } from "apollo-server";
 
 const typeDefs = gql`
   type User {
-    id: String!
+    id: ID!
     name: String!
     email: String!
     avatar_url: String!
+    # created_at: String!
+    # last_login: String!
+    # favorite_products: [Product]!
+  }
+
+  type Product {
+    id: ID!
+    name: String!
+    price: Float!
+    description: String
+    image_url: String!
+    category: String
+    sizes: [String!]
+    colors: [String!]
+    stock: Int!
+
+    author: [User!]
+    created_at: String!
+    number_of_sales: Int
+    number_of_likes: Int
   }
 
   type Query {
-    user(id: String!): User
-    users: [User!]!
+    getUser(id: ID!): User
+    getUsers: [User!]!
   }
 
   # type Mutations {
