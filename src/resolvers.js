@@ -1,4 +1,9 @@
-import { getUser, getUsers, createUser } from "./functions/users.js";
+import {
+  getUser,
+  getUsers,
+  createUser,
+  deleteUser,
+} from "./functions/users.js";
 
 export default {
   Query: {
@@ -8,5 +13,6 @@ export default {
 
   Mutation: {
     createUser,
+    deleteUser,
   },
 };

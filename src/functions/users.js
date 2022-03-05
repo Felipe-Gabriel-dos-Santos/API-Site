@@ -7,6 +7,7 @@ import {
   addDoc,
   query,
   where,
+  deleteDoc,
 } from "firebase/firestore";
 
 export function getUser(_, { id }) {
@@ -49,6 +50,21 @@ export function createUser(_, { name, email, password }) {
           .then((doc) => doc.id)
           .catch((err) => err.message);
       } else return "Email already exists";
+    })
+    .catch((err) => err.message);
+}
+
+export function deleteUser(_, { id }) {
+  const docRef = doc(Firestore, "users", id);
+
+  return getDoc(docRef)
+    .then((doc) => {
+      if (!doc.exists()) {
+        return "User not found";
+      } else
+        return deleteDoc(docRef)
+          .then(() => "User deleted")
+          .catch((err) => err.message);
     })
     .catch((err) => err.message);
 }
