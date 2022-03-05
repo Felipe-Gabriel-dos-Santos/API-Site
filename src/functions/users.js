@@ -39,7 +39,7 @@ export function getUsers() {
 export function createUser(_, { name, email, password }) {
   const docRef = collection(Firestore, "users");
 
-  const created_at = new Date().getUTCDate();
+  const created_at = new Date();
   const avatar_url =
     "https://firebasestorage.googleapis.com/v0/b/site-sorri-teste.appspot.com/o/DefaultProfileImage%2Fdefault-profile-image.png?alt=media&token=1742657d-48e1-4a0b-81aa-ea4a8855e910";
 
