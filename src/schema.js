@@ -6,7 +6,7 @@ const typeDefs = gql`
     name: String!
     email: String!
     avatar_url: String!
-    created_at: Int
+    created_at: String!
     # last_login: String!
     # favorite_products: [Product]!
   }
@@ -36,7 +36,13 @@ const typeDefs = gql`
   type Mutation {
     createUser(name: String!, email: String!, password: String!): String! # returns id of created user or error message
     deleteUser(id: ID!): String! # returns id of deleted user or error message
-    #     # updateUser(id: ID! name: String, email: String, password: String, avatar_url: String ) : User
+    updateUser(
+      id: ID!
+      name: String
+      email: String
+      password: String
+      avatar_url: String
+    ): User
   }
 `;
 export default typeDefs;

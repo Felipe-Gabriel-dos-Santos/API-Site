@@ -3,6 +3,7 @@ import {
   getUsers,
   createUser,
   deleteUser,
+  updateUser,
 } from "./functions/users.js";
 
 export default {
@@ -14,5 +15,6 @@ export default {
   Mutation: {
     createUser,
     deleteUser,
+    updateUser,
   },
 };
