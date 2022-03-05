@@ -6,7 +6,7 @@ const typeDefs = gql`
     name: String!
     email: String!
     avatar_url: String!
-    # created_at: String!
+    created_at: Int
     # last_login: String!
     # favorite_products: [Product]!
   }
