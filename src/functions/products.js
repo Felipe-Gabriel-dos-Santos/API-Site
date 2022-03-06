@@ -25,27 +25,23 @@ export function getProducts() {
   return getDocs(docRef)
     .then((docs) => {
       const products = [];
-
       docs.forEach((doc) => {
         products.push({ id: doc.id, ...doc.data() });
       });
-
       return products;
     })
     .catch((err) => err.message);
 }
 
-export function createProduct() {
+export function createProduct(_, { ...args }) {
   const docRef = collection(Firestore, "products");
 
   const created_at = new Date().toDateString();
   const number_of_sales = 0;
   const number_of_likes = 0;
 
-  const params = arguments[1];
-
   const productInfo = {
-    ...params,
+    ...args,
     created_at,
     number_of_sales,
     number_of_likes,
@@ -71,22 +67,10 @@ export function deleteProduct(_, { id }) {
     .catch((err) => err.message);
 }
 
-export function updateProduct(_, { id }) {
+export function updateProduct(_, { id, ...args }) {
   const docRef = doc(Firestore, "products", id);
 
-  const obj = new Object();
-  const params = arguments[1];
-
-  // takes everything
-  // received as a parameter
-  // through GraphQL and adds it to
-  // the empty object (with the exception of the Id)
-
-  Object.keys(params).forEach((key) => {
-    if (params[key] !== id) obj[key] = params[key];
-  });
-
-  return updateDoc(docRef, obj)
+  return updateDoc(docRef, args)
     .then(() => {
       return getDoc(docRef)
         .then((doc) => {

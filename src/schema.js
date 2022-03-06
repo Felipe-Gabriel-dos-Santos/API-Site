@@ -32,6 +32,9 @@ const typeDefs = gql`
   type Query {
     getUser(id: ID!): User
     getUsers: [User!]!
+
+    getProduct(id: ID!): Product
+    getProducts: [Product!]!
   }
 
   type Mutation {
@@ -56,6 +59,22 @@ const typeDefs = gql`
       stock: Int!
       search_tags: [String!]! # authors: [ID!]
     ): String!
+
+    deleteProduct(id: ID!): String!
+    updateProduct(
+      id: ID!
+      name: String
+      price: Float
+      description: String
+      images_url: [String!]
+      category: String
+      sizes: [String!]
+      colors: [String!]
+      stock: Int
+      number_of_likes: Int
+      number_of_sales: Int
+      search_tags: [String!]
+    ): Product
   }
 `;
 export default typeDefs;

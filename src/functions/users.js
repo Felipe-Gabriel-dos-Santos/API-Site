@@ -37,20 +37,25 @@ export function getUsers() {
     .catch((err) => err);
 }
 
-export function createUser(_, { email }) {
+export function createUser(_, { email, ...args }) {
   const docRef = collection(Firestore, "users");
 
   const created_at = new Date().toDateString();
 
-  const params = arguments[1];
-
   const avatar_url =
     "https://firebasestorage.googleapis.com/v0/b/site-sorri-teste.appspot.com/o/DefaultProfileImage%2Fdefault-profile-image.png?alt=media&token=1742657d-48e1-4a0b-81aa-ea4a8855e910";
+
+  const userInfo = {
+    args,
+    email,
+    created_at,
+    avatar_url,
+  };
 
   return getDocs(query(docRef, where("email", "==", email)))
     .then((docs) => {
       if (docs.empty) {
-        return addDoc(docRef, { ...params, created_at, avatar_url })
+        return addDoc(docRef, userInfo)
           .then((doc) => doc.id)
           .catch((err) => err.message);
       } else return "Email already exists";
@@ -73,22 +78,10 @@ export function deleteUser(_, { id }) {
     .catch((err) => err.message);
 }
 
-export function updateUser(_, { id }) {
+export function updateUser(_, { id, ...args }) {
   const docRef = doc(Firestore, "users", id);
 
-  const obj = new Object();
-  const params = arguments[1];
-
-  // takes everything
-  // received as a parameter
-  // through GraphQL and adds it to
-  // the empty object (with the exception of the Id)
-
-  Object.keys(params).forEach((key) => {
-    if (params[key] !== id) obj[key] = params[key];
-  });
-
-  return updateDoc(docRef, obj)
+  return updateDoc(docRef, args)
     .then(() => {
       return getDoc(docRef)
         .then((doc) => {

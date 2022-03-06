@@ -10,12 +10,17 @@ import {
   getProduct,
   getProducts,
   createProduct,
+  deleteProduct,
+  updateProduct,
 } from "./functions/products.js";
 
 export default {
   Query: {
     getUser,
     getUsers,
+
+    getProduct,
+    getProducts,
   },
 
   Mutation: {
@@ -24,5 +29,7 @@ export default {
     updateUser,
 
     createProduct,
+    deleteProduct,
+    updateProduct,
   },
 };
