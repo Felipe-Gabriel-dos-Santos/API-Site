@@ -6,6 +6,12 @@ import {
   updateUser,
 } from "./functions/users.js";
 
+import {
+  getProduct,
+  getProducts,
+  createProduct,
+} from "./functions/products.js";
+
 export default {
   Query: {
     getUser,
@@ -16,5 +22,7 @@ export default {
     createUser,
     deleteUser,
     updateUser,
+
+    createProduct,
   },
 };

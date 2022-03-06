@@ -16,16 +16,17 @@ const typeDefs = gql`
     name: String!
     price: Float!
     description: String
-    image_url: String!
+    images_url: [String!]!
     category: String
     sizes: [String!]
     colors: [String!]
     stock: Int!
+    search_tags: [String!]!
 
-    author: [User!]
+    # authors: [User!]!
     created_at: String!
-    number_of_sales: Int
-    number_of_likes: Int
+    number_of_sales: Int!
+    number_of_likes: Int!
   }
 
   type Query {
@@ -43,6 +44,18 @@ const typeDefs = gql`
       password: String
       avatar_url: String
     ): User
+
+    createProduct(
+      name: String!
+      price: Float!
+      description: String
+      images_url: [String!]!
+      category: String
+      sizes: [String!]
+      colors: [String!]
+      stock: Int!
+      search_tags: [String!]! # authors: [ID!]
+    ): String!
   }
 `;
 export default typeDefs;
