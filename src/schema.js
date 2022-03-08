@@ -1,6 +1,14 @@
-import { gql } from "apollo-server";
+import { gql } from "apollo-server-express";
 
 const typeDefs = gql`
+  scalar Upload
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
   type User {
     id: ID!
     name: String!
@@ -61,6 +69,7 @@ const typeDefs = gql`
     ): String!
 
     deleteProduct(id: ID!): String!
+
     updateProduct(
       id: ID!
       name: String
@@ -75,6 +84,8 @@ const typeDefs = gql`
       number_of_sales: Int
       search_tags: [String!]
     ): Product
+
+    singleUpload(file: Upload!): File!
   }
 `;
 export default typeDefs;

@@ -14,7 +14,13 @@ import {
   updateProduct,
 } from "./functions/products.js";
 
+import { singleUpload } from "./functions/upload.js";
+
+import { GraphQLUpload } from "graphql-upload";
+
 export default {
+  Upload: GraphQLUpload,
+
   Query: {
     getUser,
     getUsers,
@@ -31,5 +37,7 @@ export default {
     createProduct,
     deleteProduct,
     updateProduct,
+
+    singleUpload,
   },
 };
