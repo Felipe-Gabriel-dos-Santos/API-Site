@@ -85,7 +85,7 @@ const typeDefs = gql`
       search_tags: [String!]
     ): Product
 
-    singleUpload(file: Upload!): File!
+    singleUpload(file: Upload!): String!
   }
 `;
 export default typeDefs;
