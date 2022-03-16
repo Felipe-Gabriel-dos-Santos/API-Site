@@ -18,6 +18,8 @@ import { singleUpload } from "./functions/upload.js";
 
 import { GraphQLUpload } from "graphql-upload";
 
+import { loginEmailPassword, createAccount } from "./functions/auth.js";
+
 export default {
   Upload: GraphQLUpload,
 
@@ -30,6 +32,9 @@ export default {
   },
 
   Mutation: {
+    loginEmailPassword,
+    createAccount,
+
     createUser,
     deleteUser,
     updateUser,

@@ -46,6 +46,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    loginEmailPassword(email: String!, password: String!): User!
+    createAccount(email: String!, password: String!): String!
+
     createUser(name: String!, email: String!, password: String!): String! # returns id of created user or error message
     deleteUser(id: ID!): String! # returns id of deleted user or error message
     updateUser(
