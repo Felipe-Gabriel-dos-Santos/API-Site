@@ -9,6 +9,20 @@ const typeDefs = gql`
     encoding: String!
   }
 
+  input updatableFields {
+      name: String
+      price: Float
+      description: String
+      images_url: [String!]
+      category: String
+      sizes: [String!]
+      colors: [String!]
+      stock: Int
+      number_of_likes: Int
+      number_of_sales: Int
+      search_tags: [String!]
+  }
+
   type User {
     id: ID!
     name: String!
@@ -75,17 +89,7 @@ const typeDefs = gql`
 
     updateProduct(
       id: ID!
-      name: String
-      price: Float
-      description: String
-      images_url: [String!]
-      category: String
-      sizes: [String!]
-      colors: [String!]
-      stock: Int
-      number_of_likes: Int
-      number_of_sales: Int
-      search_tags: [String!]
+      updatableFields: updatableFields
     ): Product
 
     singleUpload(file: Upload!): String!

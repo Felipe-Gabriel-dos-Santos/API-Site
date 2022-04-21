@@ -67,10 +67,10 @@ export function deleteProduct(_, { id }) {
     .catch((err) => err.message);
 }
 
-export function updateProduct(_, { id, ...args }) {
+export function updateProduct(_, { id, updatableFields }) {
   const docRef = doc(Firestore, "products", id);
 
-  return updateDoc(docRef, args)
+  return updateDoc(docRef, updatableFields)
     .then(() => {
       return getDoc(docRef)
         .then((doc) => {
