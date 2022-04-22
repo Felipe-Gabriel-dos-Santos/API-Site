@@ -1,4 +1,4 @@
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import app from "../Firebase/firebaseConfig";
 
 const storage = getStorage(app);
@@ -6,11 +6,11 @@ const storage = getStorage(app);
 export async function singleUpload(_: any, { file }: { file: File }) {
   const imagesRef = ref(storage, `Products/${file.name}`);
 
-  const newFile = await file
+  const Uint8ArrayFromFile = await file
     .arrayBuffer()
     .then((buffer) => new Uint8Array(buffer));
 
-  const result = await uploadBytes(imagesRef, newFile, {
+  const result = await uploadBytes(imagesRef, Uint8ArrayFromFile, {
     contentType: file.type,
   })
     .then(() => {
@@ -27,5 +27,13 @@ export async function singleUpload(_: any, { file }: { file: File }) {
       };
     });
 
-  return result;
+  if (result.success) {
+    const url = await getDownloadURL(imagesRef)
+      .then((url) => url)
+      .catch((err) => err.message);
+
+    return url;
+  } else {
+    return result.message;
+  }
 }

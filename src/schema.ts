@@ -1,11 +1,6 @@
 const typeDefs = /* GraphQL */ `
   scalar File
 
-  type UploadResponse {
-    success: Boolean!
-    message: String!
-  }
-
   input updatableFields {
     name: String
     price: Float
@@ -90,7 +85,7 @@ const typeDefs = /* GraphQL */ `
 
     updateProduct(id: ID!, updatableFields: updatableFields!): Product
 
-    singleUpload(file: File!): UploadResponse!
+    singleUpload(file: File!): String!
   }
 `;
 export default typeDefs;
