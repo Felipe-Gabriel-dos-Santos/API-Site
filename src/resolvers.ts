@@ -14,14 +14,14 @@ import {
   updateProduct,
 } from "./functions/products";
 
-import { singleUpload } from "./functions/upload";
-
-
+import {
+  uploadSingleImage,
+  uploadMultipleProductsImages,
+} from "./functions/upload";
 
 import { loginEmailPassword, createAccount } from "./functions/auth";
 
 export default {
-
   Query: {
     getUser,
     getUsers,
@@ -42,6 +42,7 @@ export default {
     deleteProduct,
     updateProduct,
 
-    singleUpload,
+    uploadSingleImage,
+    uploadMultipleProductsImages,
   },
 };

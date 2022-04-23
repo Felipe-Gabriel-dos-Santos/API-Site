@@ -85,7 +85,11 @@ const typeDefs = /* GraphQL */ `
 
     updateProduct(id: ID!, updatableFields: updatableFields!): Product
 
-    singleUpload(file: File!): String!
+    uploadSingleImage(file: File!): String!
+    uploadMultipleProductsImages(
+      files: [File!]!
+      productId: String!
+    ): [String!]!
   }
 `;
 export default typeDefs;
