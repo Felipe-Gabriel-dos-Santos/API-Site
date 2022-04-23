@@ -1,0 +1,27 @@
+input updatableUserFields {
+  name: String
+  email: String
+  password: String
+  avatar_url: String
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  avatar_url: String!
+  created_at: String!
+  # last_login: String!
+  # favorite_products: [Product]!
+}
+
+type Query {
+  getUser(id: ID!): User
+  getUsers: [User!]!
+}
+
+type Mutation {
+  createUser(name: String!, email: String!, password: String!): String! # returns id of created user or error message
+  updateUser(id: ID!, updatableUserFields: updatableUserFields!): User
+  deleteUser(id: ID!): String! # returns id of deleted user or error message
+}

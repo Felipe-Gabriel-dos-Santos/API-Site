@@ -1,4 +1,4 @@
-import { Firestore } from "../Firebase/firestore";
+import { Firestore } from "../../../../Firebase/firestore";
 import {
   collection,
   getDocs,
@@ -11,33 +11,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-export function getUser(_ : any, { id } : {id : string}) {
-  const docRef = doc(Firestore, "users", id);
-
-  return getDoc(docRef)
-    .then((doc) => {
-      return { id, ...doc.data() };
-    })
-    .catch((err) => err);
-}
-
-export function getUsers() {
-  const docRef = collection(Firestore, "users");
-
-  return getDocs(docRef)
-    .then((docs) => {
-      const users : Object[] = [];
-
-      docs.forEach((doc) => {
-        users.push({ id: doc.id, ...doc.data() });
-      });
-
-      return users;
-    })
-    .catch((err) => err);
-}
-
-export function createUser(_ : any, { email, ...args } : {email : string}) {
+export function createUser(_: any, { email, ...args }: { email: string }) {
   const docRef = collection(Firestore, "users");
 
   const created_at = new Date().toDateString();
@@ -63,7 +37,7 @@ export function createUser(_ : any, { email, ...args } : {email : string}) {
     .catch((err) => err.message);
 }
 
-export function deleteUser(_ : any, { id } : {id : string}) {
+export function deleteUser(_: any, { id }: { id: string }) {
   const docRef = doc(Firestore, "users", id);
 
   return getDoc(docRef)
@@ -78,10 +52,13 @@ export function deleteUser(_ : any, { id } : {id : string}) {
     .catch((err) => err.message);
 }
 
-export function updateUser(_ : any, { id, ...args } : {id : string}) {
+export function updateUser(
+  _: any,
+  { id, updatableUserFields }: { id: string; updatableUserFields: any }
+) {
   const docRef = doc(Firestore, "users", id);
 
-  return updateDoc(docRef, args)
+  return updateDoc(docRef, updatableUserFields)
     .then(() => {
       return getDoc(docRef)
         .then((doc) => {

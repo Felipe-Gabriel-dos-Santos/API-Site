@@ -1,0 +1,6 @@
+scalar File
+
+type Mutation {
+  uploadSingleImage(file: File!): String!
+  uploadMultipleProductsImages(files: [File!]!, productId: String!): [String!]!
+}

@@ -1,0 +1,57 @@
+input productUpdatableFields {
+  name: String
+  price: Float
+  description: String
+  images_url: [String!]
+  category: String
+  sizes: [String!]
+  colors: [String!]
+  stock: Int
+  number_of_likes: Int
+  number_of_sales: Int
+  search_tags: [String!]
+}
+
+input productCreateFields {
+  name: String!
+  price: Float!
+  description: String
+  images_url: [String!]!
+  category: String
+  sizes: [String!]
+  colors: [String!]
+  stock: Int!
+  search_tags: [String!]!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  price: Float!
+  description: String
+  images_url: [String!]!
+  category: String
+  sizes: [String!]
+  colors: [String!]
+  stock: Int!
+  search_tags: [String!]!
+
+  # authors: [User!]!
+  created_at: String!
+  number_of_sales: Int!
+  number_of_likes: Int!
+}
+
+type Query {
+  getProduct(id: ID!): Product
+  getProducts: [Product!]!
+}
+
+type Mutation {
+  createProduct(productCreateFields: productCreateFields!): String!
+  updateProduct(
+    id: ID!
+    productUpdatableFields: productUpdatableFields!
+  ): Product
+  deleteProduct(id: ID!): String!
+}
