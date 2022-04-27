@@ -6,13 +6,12 @@ input updatableUserFields {
 }
 
 type User {
-  id: ID!
-  name: String!
-  email: String!
-  avatar_url: String!
-  created_at: String!
-  # last_login: String!
-  # favorite_products: [Product]!
+  authId: ID!
+  name: String
+  email: String
+  avatarUrl: String
+  createdAt: String
+  lastLogin: String
 }
 
 type Query {

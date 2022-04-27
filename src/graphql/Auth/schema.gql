@@ -1,4 +1,4 @@
 type Mutation {
+  createAccount(name: String!, email: String!, password: String!): User
   loginEmailPassword(email: String!, password: String!): User!
-  createAccount(email: String!, password: String!): String!
 }

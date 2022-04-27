@@ -1,5 +1,5 @@
 import { getUser, getUsers } from "./functions/Query";
-import { createUser, updateUser, deleteUser } from "./functions/Mutation";
+import { updateUser, deleteUser } from "./functions/Mutation";
 
 export default {
   Query: {
@@ -8,7 +8,6 @@ export default {
   },
 
   Mutation: {
-    createUser,
     updateUser,
     deleteUser,
   },
