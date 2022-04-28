@@ -87,6 +87,22 @@ class Firestore {
       .catch((err) => err.code);
   }
 
+  readAll(collectionName: string): Promise<Object[]> {
+    const collectionRef = collection(this.db, collectionName);
+
+    return getDocs(collectionRef)
+      .then((docs) => {
+        const list: Object[] = [];
+
+        docs.forEach((doc) => {
+          list.push({ documentId: doc.id, ...doc.data() });
+        });
+
+        return list;
+      })
+      .catch((err) => err.code);
+  }
+
   update(
     collectionName: string,
     documentId: string,
