@@ -128,7 +128,9 @@ class Firestore {
         return { message: "Document deleted", code: 200 };
       })
       .catch((err) => {
-        return { message: err.code, code: 400 };
+        return { message: err.code, code: 404 };
       });
   }
 }
+
+export default new Firestore();
