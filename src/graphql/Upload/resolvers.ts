@@ -1,11 +1,8 @@
-import {
-  uploadSingleImage,
-  uploadMultipleProductsImages,
-} from "./functions/Mutation";
+import { uploadSingleImage, uploadArrayImages } from "./functions/Mutation";
 
 export default {
   Mutation: {
     uploadSingleImage,
-    uploadMultipleProductsImages,
+    uploadArrayImages,
   },
 };
