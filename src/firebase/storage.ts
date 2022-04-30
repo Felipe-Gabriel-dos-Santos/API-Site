@@ -52,3 +52,5 @@ class Storage {
     return await Promise.all(URLs).then((urls) => urls);
   }
 }
+
+export default new Storage();
