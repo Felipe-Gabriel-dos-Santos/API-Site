@@ -12,3 +12,5 @@ export function uploadSingleImage(_: any, { file }: { file: File }) {
 export async function uploadArrayImages(_: any, { files, productId }: Input) {
   return await storage.uploadMultipleFiles(`products/${productId}`, files);
 }
+
+// Test commit
