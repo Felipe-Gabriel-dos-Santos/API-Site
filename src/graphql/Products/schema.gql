@@ -25,7 +25,7 @@ input productCreateFields {
 }
 
 type Product {
-  id: ID!
+  documentId: ID!
   name: String!
   price: Float!
   description: String
@@ -42,6 +42,12 @@ type Product {
   number_of_likes: Int!
 }
 
+type deleteProductResponse {
+  message: String
+  code: Int!
+  success: Boolean!
+}
+
 type Query {
   getProduct(id: ID!): Product
   getProducts: [Product!]!
@@ -53,5 +59,5 @@ type Mutation {
     id: ID!
     productUpdatableFields: productUpdatableFields!
   ): Product
-  deleteProduct(id: ID!): String!
+  deleteProduct(id: ID!): deleteProductResponse!
 }

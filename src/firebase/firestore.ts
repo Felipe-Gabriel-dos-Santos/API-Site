@@ -125,10 +125,10 @@ class Firestore {
 
     return deleteDoc(documentRef)
       .then(() => {
-        return { message: "Document deleted", code: 200 };
+        return { message: "Document deleted", code: 200, success: true };
       })
       .catch((err) => {
-        return { message: err.code, code: 404 };
+        return { message: err.code, code: 404, success: false };
       });
   }
 }

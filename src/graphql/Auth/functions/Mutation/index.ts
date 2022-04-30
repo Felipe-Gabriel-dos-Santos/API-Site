@@ -6,8 +6,9 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { Firestore } from "../../../../Firebase/firestore";
-import { setDoc, getDoc, doc } from "firebase/firestore";
+import firestore from "../../../../Firebase/firestore";
+
+const collectionName = "users";
 
 interface IUser {
   authId: string;
@@ -24,41 +25,18 @@ interface ICAInput {
   password: string;
 }
 
-function getUserOnFirestore(documentId: string): Promise<IUser> {
-  return new Promise((resolve, reject) => {
-    const docRef = doc(Firestore, "users", documentId);
-
-    getDoc(docRef)
-      .then((doc) => resolve(doc.data() as IUser))
-      .catch((err) => reject(err));
-  });
-}
-
-function createUserOnFirestore(user: IUser) {
-  return new Promise((resolve, reject) => {
-    const docRef = doc(Firestore, "users", user.authId);
-
-    return setDoc(docRef, user)
-      .then(() => {
-        return getUserOnFirestore(user.authId)
-          .then((user) => resolve(user))
-          .catch((err) => reject(err));
-      })
-
-      .catch((err) => reject(err));
-  });
-}
-
 export function loginEmailPassword(
   _: any,
   { email, password }: { email: string; password: string }
 ) {
   return signInWithEmailAndPassword(Auth, email, password)
-    .then((result) => {
-      getUserOnFirestore(result.user.uid)
+    .then((result) =>
+      firestore
+        .read(collectionName, result.user.uid)
         .then((user) => user)
-        .catch((err) => new GraphQLYogaError(err));
-    })
+        .catch((err) => new GraphQLYogaError(err.code))
+    )
+
     .catch((err) => new GraphQLYogaError(err));
 }
 
@@ -79,9 +57,7 @@ export function createAccount(_: any, { name, email, password }: ICAInput) {
         avatarUrl: user.photoURL ? user.photoURL : avatarUrl,
       };
 
-      return createUserOnFirestore(User)
-        .then((user) => user)
-        .catch((err) => new GraphQLYogaError(err.code));
+      return firestore.createWithId(collectionName, user.uid, User);
     })
     .catch((err) => new GraphQLYogaError(err.code));
 }
