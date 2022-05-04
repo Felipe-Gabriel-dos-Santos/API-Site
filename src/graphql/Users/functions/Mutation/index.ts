@@ -1,4 +1,4 @@
-import firestore from "../../../../Firebase/firestore";
+import firestore from "../../../../firebase/firestore";
 
 const collectionName = "users";
 

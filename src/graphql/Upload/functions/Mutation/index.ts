@@ -1,4 +1,4 @@
-import storage from "../../../../Firebase/storage";
+import storage from "../../../../firebase/storage";
 
 interface Input {
   files: File[];

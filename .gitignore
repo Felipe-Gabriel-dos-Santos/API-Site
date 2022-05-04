@@ -1,1 +1,3 @@
 node_modules
+mongoConfig.ts
+.env

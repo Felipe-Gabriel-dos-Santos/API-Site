@@ -2,16 +2,17 @@ input updatableUserFields {
   name: String
   email: String
   password: String
-  avatar_url: String
+  avatarUrl: String
 }
 
 type User {
-  authId: ID!
-  name: String
-  email: String
-  avatarUrl: String
-  createdAt: String
-  lastLogin: String
+  id: ID!
+  name: String!
+  email: String!
+  avatarUrl: String!
+  token: String
+  createdAt: String!
+  updatedAt: String!
 }
 
 type Query {
@@ -20,7 +21,7 @@ type Query {
 }
 
 type Mutation {
-  createUser(name: String!, email: String!, password: String!): String! # returns id of created user or error message
-  updateUser(id: ID!, updatableUserFields: updatableUserFields!): User
-  deleteUser(id: ID!): String! # returns id of deleted user or error message
+  createUser(name: String!, email: String!, password: String!): User!
+  updateUser(id: ID!, updatableUserFields: updatableUserFields!): User!
+  deleteUser(id: ID!): deleteResponse!
 }
