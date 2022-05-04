@@ -1,14 +1,16 @@
-import firestore from "../../../../Firebase/firestore";
+import { Users } from "../../../../mongoDB/class/Users";
+import userModel from "../../../../mongoDB/schemas/user";
+import { IUserInput } from "../../../../types/user";
 
-const collectionName = "users";
+const userCollection = new Users(userModel);
 
 export function updateUser(
   _: any,
-  { id, updatableUserFields }: { id: string; updatableUserFields: any }
+  { id, updatableUserFields }: { id: string; updatableUserFields: IUserInput }
 ) {
-  return firestore.update(collectionName, id, updatableUserFields);
+  return userCollection.updateUser(id, updatableUserFields);
 }
 
 export function deleteUser(_: any, { id }: { id: string }) {
-  return firestore.delete(collectionName, id);
+  return userCollection.deleteUser(id);
 }

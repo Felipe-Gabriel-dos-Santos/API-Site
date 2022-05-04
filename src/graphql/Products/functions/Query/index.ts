@@ -1,11 +1,12 @@
-import firestore from "../../../../Firebase/firestore";
+import productModel from "../../../../mongoDB/schemas/product";
+import { Products } from "../../../../mongoDB/class/Products";
 
-const collectionName = "products";
+const productsCollection = new Products(productModel);
 
 export function getProduct(_: any, { id }: { id: string }) {
-  return firestore.read(collectionName, id);
+  return productsCollection.readProductById(id);
 }
 
 export function getProducts() {
-  return firestore.readAll(collectionName);
+  return productsCollection.readAllProducts();
 }

@@ -1,5 +1,7 @@
 import { createServer } from "@graphql-yoga/node";
 import { typeDefs, resolvers } from "./graphql";
+import connectionString from "./mongoDB/mongoConfig";
+import { connect } from "mongoose";
 
 const server = createServer({
   schema: {
@@ -8,7 +10,11 @@ const server = createServer({
   },
 });
 
-server
-  .start()
-  .then((res) => console.log(res))
-  .catch((err) => err);
+connect(connectionString)
+  .then(() => {
+    return server
+      .start()
+      .then((res) => console.log(res))
+      .catch((err) => err);
+  })
+  .catch((error) => console.log(error));

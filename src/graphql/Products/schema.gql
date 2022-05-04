@@ -16,33 +16,34 @@ input productCreateFields {
   name: String!
   price: Float!
   description: String
-  images_url: [String!]!
+  imagesUrl: [String!]!
   category: String
   sizes: [String!]
   colors: [String!]
   stock: Int!
-  search_tags: [String!]!
+  searchTags: [String!]!
 }
 
 type Product {
-  documentId: ID!
+  id: ID!
   name: String!
   price: Float!
   description: String
-  images_url: [String!]!
-  category: String
+  imagesUrl: [String!]!
+  category: String!
   sizes: [String!]
   colors: [String!]
   stock: Int!
-  search_tags: [String!]!
+  searchTags: [String!]!
 
   # authors: [User!]!
-  created_at: String!
-  number_of_sales: Int!
-  number_of_likes: Int!
+  createdAt: String!
+  updatedAt: String!
+  numberOfLikes: Int!
+  numberOfSales: Int!
 }
 
-type deleteProductResponse {
+type deleteResponse {
   message: String
   code: Int!
   success: Boolean!
@@ -54,10 +55,10 @@ type Query {
 }
 
 type Mutation {
-  createProduct(productCreateFields: productCreateFields!): String!
+  createProduct(productCreateFields: productCreateFields!): Product!
   updateProduct(
     id: ID!
     productUpdatableFields: productUpdatableFields!
   ): Product
-  deleteProduct(id: ID!): deleteProductResponse!
+  deleteProduct(id: ID!): deleteResponse!
 }

@@ -1,32 +1,26 @@
-import firestore from "../../../../Firebase/firestore";
+import { Products } from "../../../../mongoDB/class/Products";
+import productModel from "../../../../mongoDB/schemas/product";
+import { IProductInput } from "../../../../types/product";
 
-const collectionName = "products";
+const productsCollection = new Products(productModel);
 
 export function createProduct(
   _: any,
-  { productCreateFields }: { productCreateFields: Object }
+  { productCreateFields }: { productCreateFields: IProductInput }
 ) {
-  const created_at = new Date().toDateString();
-  const number_of_sales = 0;
-  const number_of_likes = 0;
-
-  const productInfo = {
-    ...productCreateFields,
-    created_at,
-    number_of_sales,
-    number_of_likes,
-  };
-
-  return firestore.create(collectionName, productInfo);
+  return productsCollection.createProduct(productCreateFields);
 }
 
 export function updateProduct(
   _: any,
-  { id, productUpdatableFields }: { id: string; productUpdatableFields: any }
+  {
+    id,
+    productUpdatableFields,
+  }: { id: string; productUpdatableFields: IProductInput }
 ) {
-  return firestore.update(collectionName, id, productUpdatableFields);
+  return productsCollection.updateProduct(id, productUpdatableFields);
 }
 
 export function deleteProduct(_: any, { id }: { id: string }) {
-  return firestore.delete(collectionName, id);
+  return productsCollection.deleteProduct(id);
 }
