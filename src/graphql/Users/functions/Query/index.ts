@@ -1,11 +1,12 @@
-import firestore from "../../../../firebase/firestore";
+import { Users } from "../../../../mongoDB/class/Users";
+import userModel from "../../../../mongoDB/schemas/user";
 
-const collectionName = "users";
+const userCollection = new Users(userModel);
 
 export function getUser(_: any, { id }: { id: string }) {
-  return firestore.read(collectionName, id);
+  return userCollection.readUserById(id);
 }
 
 export function getUsers() {
-  return firestore.readAll(collectionName);
+  return userCollection.readAllUsers();
 }
