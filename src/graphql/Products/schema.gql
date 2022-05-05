@@ -7,9 +7,9 @@ input productUpdatableFields {
   sizes: [String!]
   colors: [String!]
   stock: Int
-  number_of_likes: Int
-  number_of_sales: Int
-  search_tags: [String!]
+  numberOfLikes: Int
+  numberOfSales: Int
+  searchTags: [String!]
 }
 
 input productCreateFields {
@@ -17,7 +17,7 @@ input productCreateFields {
   price: Float!
   description: String
   imagesUrl: [String!]!
-  category: String
+  category: String!
   sizes: [String!]
   colors: [String!]
   stock: Int!
