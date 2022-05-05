@@ -2,7 +2,7 @@ import "dotenv/config";
 import { sign, verify } from "jsonwebtoken";
 
 export class JWT {
-  generateToken(id: string) {
+  generateToken(id: string): Promise<string> {
     return new Promise((resolve, reject) => {
       if (process.env.SECRET_KEY)
         resolve(sign({ id }, process.env.SECRET_KEY, { expiresIn: "1h" }));
@@ -10,7 +10,7 @@ export class JWT {
     });
   }
 
-  verifyToken(token: string) {
+  verifyToken(token: string): Promise<string> {
     return new Promise((resolve, reject) => {
       if (process.env.SECRET_KEY) {
         try {

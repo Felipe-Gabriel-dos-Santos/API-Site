@@ -16,8 +16,12 @@ class Users extends Collection {
     return this.readDocumentById<IUser>(documentId);
   }
 
-  readUserByFields(fields: IUser): Promise<IUser[]> {
+  readUserByFields(fields: Object): Promise<IUser[]> {
     return this.readDocumentByFields<IUser>(fields);
+  }
+
+  readAllUsers(): Promise<IUser[]> {
+    return this.readAllDocuments<IUser>();
   }
 
   updateUser(documentId: string, data: IUserInput): Promise<IUser> {

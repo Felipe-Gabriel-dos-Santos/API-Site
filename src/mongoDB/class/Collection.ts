@@ -32,7 +32,7 @@ export class Collection {
     });
   }
 
-  protected readDocumentByFields<T>(fields: T): Promise<T[]> {
+  protected readDocumentByFields<T>(fields: Object): Promise<T[]> {
     return new Promise((resolve, reject) => {
       this.model.findOne(fields, null, null, (err: any, result: any) => {
         if (err) reject(err);
