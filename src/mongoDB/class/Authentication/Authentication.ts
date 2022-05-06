@@ -18,13 +18,12 @@ class Authentication {
         .readUserByFields({ email: this.email, password: this.password })
         .then((user) => {
           this.isLoggedIn = true;
-          const loggedUser = user[0];
 
-          this.JWTAuthentication.generateToken(loggedUser.id)
-            .then((token) => (loggedUser.token = token))
+          this.JWTAuthentication.generateToken(user.id)
+            .then((token) => (user.token = token))
             .catch((err) => err);
 
-          resolve(loggedUser);
+          resolve(user);
         })
         .catch((err) => {
           this.isLoggedIn = false;
@@ -36,22 +35,27 @@ class Authentication {
   createAccount(name: string): Promise<IUser> {
     return new Promise((resolve, reject) => {
       this.userCollection
-        .createUser({
-          name,
-          email: this.email,
-          password: this.password,
-        })
-        .then((user) => {
-          this.isLoggedIn = true;
-          this.JWTAuthentication.generateToken(user.id)
-            .then((token) => (user.token = token))
-            .catch((err) => reject(err));
+        .readUserByFields({ email: this.email })
+        .then(() => reject(new Error("User already exists")))
+        .catch(() => {
+          this.userCollection
+            .createUser({
+              name,
+              email: this.email,
+              password: this.password,
+            })
+            .then((user) => {
+              this.isLoggedIn = true;
+              this.JWTAuthentication.generateToken(user.id)
+                .then((token) => (user.token = token))
+                .catch((err) => reject(err));
 
-          resolve(user);
-        })
-        .catch((err) => {
-          this.isLoggedIn = false;
-          reject(err);
+              resolve(user);
+            })
+            .catch((err) => {
+              this.isLoggedIn = false;
+              reject(err);
+            });
         });
     });
   }

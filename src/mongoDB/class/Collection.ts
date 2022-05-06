@@ -32,11 +32,13 @@ export class Collection {
     });
   }
 
-  protected readDocumentByFields<T>(fields: Object): Promise<T[]> {
+  protected readDocumentByFields<T>(fields: Object): Promise<T> {
     return new Promise((resolve, reject) => {
       this.model.findOne(fields, null, null, (err: any, result: any) => {
         if (err) reject(err);
-        resolve(result as T[]);
+        if (!result) reject(new Error("document not found"));
+
+        resolve(result as T);
       });
     });
   }

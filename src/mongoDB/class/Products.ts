@@ -20,7 +20,7 @@ class Products extends Collection {
     return this.readDocumentById<IProduct>(documentId);
   }
 
-  readProductByFields(fields: Object): Promise<IProduct[]> {
+  readProductByFields(fields: Object): Promise<IProduct> {
     return this.readDocumentByFields<IProduct>(fields);
   }
 

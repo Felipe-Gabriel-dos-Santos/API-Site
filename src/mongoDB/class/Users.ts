@@ -16,7 +16,7 @@ class Users extends Collection {
     return this.readDocumentById<IUser>(documentId);
   }
 
-  readUserByFields(fields: Object): Promise<IUser[]> {
+  readUserByFields(fields: Object): Promise<IUser> {
     return this.readDocumentByFields<IUser>(fields);
   }
 
