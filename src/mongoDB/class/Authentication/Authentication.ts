@@ -25,9 +25,9 @@ class Authentication {
 
           resolve(user);
         })
-        .catch((err) => {
+        .catch(() => {
           this.isLoggedIn = false;
-          reject(err);
+          reject("Error: User not found or password is incorrect");
         });
     });
   }

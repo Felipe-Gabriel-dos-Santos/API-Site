@@ -6,9 +6,9 @@ const userCollection = new Users(userModel);
 
 export function updateUser(
   _: any,
-  { id, updatableUserFields }: { id: string; updatableUserFields: IUserInput }
+  { id, userUpdatableFields }: { id: string; userUpdatableFields: IUserInput }
 ) {
-  return userCollection.updateUser(id, updatableUserFields);
+  return userCollection.updateUser(id, userUpdatableFields);
 }
 
 export function deleteUser(_: any, { id }: { id: string }) {

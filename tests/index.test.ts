@@ -16,7 +16,7 @@ async function res(query) {
     .set("Accept", "application/json");
 }
 
-describe("product", () => {
+describe("products", () => {
   it("should get products", async () => {
     const GET_PRODUCTS_QUERY = `
     query {
@@ -143,5 +143,206 @@ describe("product", () => {
 
     expect(response.status).toBe(200);
     expect(response.body.data.updateProduct.name).toBe(name);
+  });
+});
+
+describe("users", () => {
+  it("should get users", async () => {
+    const GET_USERS_QUERY = `
+    query {
+        getUsers {
+          id
+          name
+          email
+          createdAt
+        }
+      }
+`;
+    const response = await res(GET_USERS_QUERY);
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.getUsers).toBeTruthy();
+    expect(response.body.data.getUsers.length).toBeGreaterThan(0);
+  });
+
+  it("should get user by id", async () => {
+    const GET_USER_QUERY = `
+    query {
+        getUser(id: "62757f7289ecd38951e6c93f") {
+          id
+          name
+          email
+          createdAt
+        }
+      }
+`;
+    const response = await res(GET_USER_QUERY);
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.getUser).toBeTruthy();
+  });
+
+  it("should get user by id error", async () => {
+    const GET_USER_QUERY = `
+    query {
+        getUser(id: "'") {
+          id
+          name
+          email
+          createdAt
+        }
+      }
+`;
+    const response = await res(GET_USER_QUERY);
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.getUser).toBe(null);
+    expect(response.body.errors[0].message).toBe("Error: invalid document id");
+  });
+
+  it("should update user", async () => {
+    const name = "Teste";
+
+    const UPDATE_USER_QUERY = `
+    mutation {
+      updateUser(
+        id: "62757f7289ecd38951e6c93f"
+        userUpdatableFields: { name: "${name}" }
+      ) {
+        name
+      }
+    }`;
+
+    const response = await res(UPDATE_USER_QUERY);
+
+    expect(response.status).toBe(200);
+    expect(response.body.data.updateUser.name).toBe(name);
+  });
+});
+
+describe("authentication", () => {
+  it("create account & login & delete user", async () => {
+    const name = "Teste";
+    const email = "12342020@gmail.com";
+    const password = "12345678";
+
+    const CREATE_ACCOUNT_QUERY = `
+    mutation {
+      createAccount(
+        name: "${name}"
+        email: "${email}"
+        password: "${password}"
+      ) {
+        id
+        name
+        email
+        avatarUrl
+        token
+        createdAt
+        updatedAt
+      }
+    }
+`;
+
+    const createAccountResponse = await res(CREATE_ACCOUNT_QUERY);
+    const { id } = createAccountResponse.body.data.createAccount;
+
+    expect(createAccountResponse.status).toBe(200);
+    expect(createAccountResponse.body.data.createAccount).toBeTruthy();
+    expect(id).toBeTruthy();
+    expect(createAccountResponse.body.data.createAccount.name).toBe(name);
+    expect(createAccountResponse.body.data.createAccount.email).toBe(email);
+
+    const LOGIN_QUERY = `
+    mutation {
+      loginEmailPassword(email: "${email}", password: "${password}") {
+        name
+        token
+        email
+        avatarUrl
+        createdAt
+      }
+    }
+    `;
+
+    const loginResponse = await res(LOGIN_QUERY);
+
+    expect(loginResponse.status).toBe(200);
+    expect(loginResponse.body.data.loginEmailPassword).toBeTruthy();
+    expect(loginResponse.body.data.loginEmailPassword.name).toBe(name);
+    expect(loginResponse.body.data.loginEmailPassword.email).toBe(email);
+    expect(loginResponse.body.data.loginEmailPassword.token).toBeTruthy();
+
+    const DELETE_USER_QUERY = `
+    mutation {
+      deleteUser(id: "${id}") {
+        success
+      }
+    }
+    `;
+
+    const deleteUserResponse = await res(DELETE_USER_QUERY);
+
+    expect(deleteUserResponse.status).toBe(200);
+    expect(deleteUserResponse.body.data.deleteUser.success).toBe(true);
+  });
+
+  it("should create account error", async () => {
+    const name = "Teste";
+    const email = "vdoss2011@gmail.com";
+    const password = "12345678";
+
+    const CREATE_ACCOUNT_QUERY = `
+    mutation {
+      createAccount(
+        name: "${name}"
+        email: "${email}"
+        password: "${password}"
+      ) {
+        id
+        name
+        email
+        avatarUrl
+        token
+        createdAt
+        updatedAt
+      }
+    }
+`;
+
+    const createAccountResponse = await res(CREATE_ACCOUNT_QUERY);
+
+    expect(createAccountResponse.status).toBe(200);
+    expect(createAccountResponse.body.errors).toBeTruthy();
+    expect(createAccountResponse.body.errors[0].message).toBe(
+      "Error: User already exists"
+    );
+    expect(createAccountResponse.body.data).toBe(null);
+  });
+
+  it("should login error", async () => {
+    const email = "1234";
+    const password = "12345678";
+
+    const LOGIN_QUERY = `
+    mutation {
+      loginEmailPassword(email: "${email}", password: "${password}") {
+        name
+        token
+        email
+        avatarUrl
+        createdAt
+      }
+    }
+    `;
+
+    const loginResponse = await res(LOGIN_QUERY);
+
+    expect(loginResponse.status).toBe(200);
+    expect(loginResponse.body.errors).toBeTruthy();
+    expect(loginResponse.body.errors[0].message).toBe(
+      "Error: User not found or password is incorrect"
+    );
+    expect(loginResponse.body.data).toBe(null);
   });
 });

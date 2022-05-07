@@ -26,7 +26,13 @@ export class Collection {
   protected readDocumentById<T>(documentId: string): Promise<T> {
     return new Promise((resolve, reject) => {
       this.model.findById(documentId, null, null, (err: any, result: any) => {
-        if (err) reject(err);
+        if (err) {
+          if (err.message.includes("Cast to ObjectId failed for value")) {
+            reject(new Error("invalid document id"));
+          } else reject(err);
+        }
+        if (!result) reject(new Error("document not found"));
+
         resolve(result as T);
       });
     });
@@ -47,6 +53,8 @@ export class Collection {
     return new Promise((resolve, reject) => {
       this.model.find({}, null, null, (err: any, result: any) => {
         if (err) reject(err);
+        if (!result) reject(new Error("no documents found"));
+
         resolve(result as T[]);
       });
     });

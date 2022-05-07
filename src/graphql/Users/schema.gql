@@ -1,4 +1,4 @@
-input updatableUserFields {
+input userUpdatableFields {
   name: String
   email: String
   password: String
@@ -21,6 +21,6 @@ type Query {
 }
 
 type Mutation {
-  updateUser(id: ID!, updatableUserFields: updatableUserFields!): User!
+  updateUser(id: ID!, userUpdatableFields: userUpdatableFields!): User!
   deleteUser(id: ID!): deleteResponse!
 }
