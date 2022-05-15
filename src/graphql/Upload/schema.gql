@@ -1,6 +1,0 @@
-scalar File
-
-type Mutation {
-  uploadSingleImage(file: File!): String!
-  uploadArrayImages(files: [File!]!, productId: String!): [String!]!
-}
