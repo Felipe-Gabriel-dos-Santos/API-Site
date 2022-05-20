@@ -1,4 +1,4 @@
-import UserRepository from "../../repositories/userRepository/userRepository";
+import UserRepository from "../../repositories/userRepository";
 
 import { User } from "../../domain/entities/user";
 
