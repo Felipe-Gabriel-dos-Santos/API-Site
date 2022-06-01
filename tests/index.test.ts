@@ -172,7 +172,6 @@ describe("users", () => {
           id
           name
           email
-          createdAt
         }
       }
 `;
@@ -189,7 +188,6 @@ describe("users", () => {
           id
           name
           email
-          createdAt
         }
       }
 `;

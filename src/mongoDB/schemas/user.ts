@@ -35,4 +35,4 @@ const userSchema = new Schema<IUserInput>(
   { timestamps: true }
 );
 
-export default model<IUserInput>("User", userSchema);
+export default model<IUserInput>("Users", userSchema);
