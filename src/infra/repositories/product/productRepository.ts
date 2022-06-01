@@ -35,6 +35,16 @@ class ProductRepository implements IProductRepository {
       });
     });
   }
+
+  findAll(): Promise<DocumentType<Product>[]> {
+    return new Promise((resolve, reject) => {
+      this._model.find({}, (err: any, products: any) => {
+        if (err) reject(err.message);
+        else resolve(products);
+      });
+    });
+  }
+
   update(
     id: string,
     dataToUpdate: Partial<Product>

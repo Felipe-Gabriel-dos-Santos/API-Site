@@ -5,6 +5,7 @@ interface IProductRepository {
   create(data: Product): Promise<DocumentType<Product>>;
   findById(id: string): Promise<DocumentType<Product>>;
   findByName(productName: string): Promise<DocumentType<Product>>;
+  findAll(): Promise<DocumentType<Product>[]>;
   update(
     id: string,
     dataToUpdate: Partial<Product>
